@@ -1,0 +1,119 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'//lambda
+apply plugin: 'com.neenbedankt.android-apt'//dagger2
+
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.haiyangroup.educatiion"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "int", "SERVER_TYPE", "0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }//lambda
+    signingConfigs {
+        release {
+            keyAlias 'test'
+            keyPassword 'test2016'
+            storeFile file('test.jks')
+            storePassword 'test2016'
+        }
+    }
+
+    buildTypes {
+        release {
+            //设置是否混淆
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            //设置压缩对齐
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources true
+            //指定签名包得输入文件名称
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为GankDaily_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "Test_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        // OFFICIAL = 0, RC = 1, QA = 2, DEV = 3  Constant.SERVER_TYPE
+        official {
+            buildConfigField "int", "SERVER_TYPE", "0"
+        }
+        rc {
+            buildConfigField "int", "SERVER_TYPE", "1"
+        }
+        qa {
+            buildConfigField "int", "SERVER_TYPE", "2"
+        }
+        dev {
+            buildConfigField "int", "SERVER_TYPE", "3"
+        }
+
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+}
+
+//configurations.all {
+//    resolutionStrategy.force 'com.android.support:support-annotations:23.0.0'
+//}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+
+    compile 'com.github.hwj3747:MDRRLibrary:v1.0'
+
+    apt 'com.google.dagger:dagger-compiler:2.0'//使用apt build dagger-compiler编译器
+    provided 'org.glassfish:javax.annotation:10.0-b28'//必须配置，dagger缺少 javax.annotation包
+    compile 'com.google.dagger:dagger:2.0'//dagger2配置，依赖注入，实现单例模式，解耦MVP架构
+
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'//rxandroid 配置，实现异步操作
+
+    compile 'com.squareup.retrofit:retrofit:1.9.0'//retrofit配置，链接网络的库
+
+    compile 'frankiesardo:icepick:3.1.0'
+    apt 'frankiesardo:icepick-processor:3.1.0'//icepick配置，用来保存和恢复状态
+
+    compile 'com.jakewharton:butterknife:6.1.0'//butterknife配置,使用Android Butterknife Zelezny插件，简化findViewById()和setonclicktListener()
+
+}

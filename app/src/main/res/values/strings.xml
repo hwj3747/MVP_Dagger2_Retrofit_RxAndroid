@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MVP_Dagger2_Retrofit_RxAndroid</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>

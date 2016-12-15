@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_primary_green">#1fba7b</color>
+    <color name="color_primary_green_dark">#1fba7b</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="backgroud">#f5f5f8</color>
+    <color name="pick_background">#cbcbcb</color>
+
+    <color name="transparent_black">#55000000</color>
+
+    <color name="notice_color">#323232</color>
+
+    <color name="separator">#d3dbdb</color>
+
+    <color name="home_back">#cbcbcb</color>
+
+    <color name="course_table">#d3dbdb</color>
+
+    <color name="color_dark_grey">#808080</color>
+    <color name="color_black">#000000</color>
+    <color name="color_green">#00FF00</color>
+    <color name="color_red">#FF0000</color>
+    <color name="color_white">#FFFFFF</color>
+
+    <color name="system_back">#f6f6f9</color>
+
+    <color name="text_color">#313131</color>
+
+    <color name="hint_color">#878787</color>
+
+    <color name="campus_color">#7a7a7a</color>
+
+    <color name="column_color">#f0f0f0</color>
+</resources>
