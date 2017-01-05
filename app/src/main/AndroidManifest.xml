@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.haiyangroup.education" >
-
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" ></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" ></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" ></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" ></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +14,9 @@
         android:name="com.haiyangroup.education.common.App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.haiyangroup.education.ui.test2.TestActivity2"
-        >
-        </activity>
 
         <activity
-            android:name="com.haiyangroup.education.ui.test.TestActivity"
+            android:name="com.haiyangroup.education.ui.test2.TestActivity2"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

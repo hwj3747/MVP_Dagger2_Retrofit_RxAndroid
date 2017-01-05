@@ -1,17 +1,16 @@
 package com.haiyangroup.education.common;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 
-import com.haiyangroup.library.utils.CrashHandler;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import compartment.ComponentCacheApplication;
 
 
-public class App extends ComponentCacheApplication {
+public class App extends Application {
     private AppComponent component;
 
 
@@ -63,28 +62,7 @@ public class App extends ComponentCacheApplication {
                 .appModule(new AppModule(this))
                 .build();
         ComponentHolder.setAppComponent(appComponent);
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(getApplicationContext());
-//        EMChat.getInstance().init(getApplicationContext());
-//        EMChat.getInstance().setDebugMode(true);//在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
-//        EMChat.getInstance().setAutoLogin(true);
-//
-//        //开启测试模式
-//        //  BeeCloud.setSandbox(true);
-////此处第二个参数是控制台的test secret
-//        BeeCloud.setAppIdAndSecret("b21dacc5-2294-4f1b-bbbd-58e14376da6a",
-//                "59a764d5-f1fa-43c9-a27f-7a466cd652d7");
     }
-
-//    public static AppComponent getAppComponent(Context context) {
-//        App app = (App)context.getApplicationContext();
-//        if (app.component == null) {
-//            app.component = DaggerAppComponent.builder()
-//                    .appModule(app.getApplicationModule())
-//                    .build();
-//        }
-//        return app.component;
-//    }
 
     public static void clearAppComponent(Context context) {
         App app = (App)context.getApplicationContext();

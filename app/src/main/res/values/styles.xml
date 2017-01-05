@@ -13,11 +13,11 @@
         <!-- 默认是AppBar的title颜色（如需修改，可以去appBarStyle中配置） -->
         <item name="android:textColorPrimary">@android:color/white</item>
 
-        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation</item>
-        <item name="appBarStyle">@style/AppBar</item>
-        <item name="menuWidth">@dimen/menuWidth</item>
-        <item name="menuTextStyle">@style/Menu.Text</item>
-        <item name="menuImageStyle">@style/Menu.Image</item>
+        <!--<item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation</item>-->
+        <!--<item name="appBarStyle">@style/AppBar</item>-->
+        <!--<item name="menuWidth">@dimen/menuWidth</item>-->
+        <!--<item name="menuTextStyle">@style/Menu.Text</item>-->
+        <!--<item name="menuImageStyle">@style/Menu.Image</item>-->
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

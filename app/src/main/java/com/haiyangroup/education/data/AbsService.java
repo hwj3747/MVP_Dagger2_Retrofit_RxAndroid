@@ -24,6 +24,7 @@ public class AbsService {
 
     private static final String FORUM_SERVER_URL = "https://sk.haiyangroup.com:9081/SAAS";
     private AbsApi mAbsApi;
+    private volatile static AbsService singleton;
 
     public AbsService() {
 
@@ -66,10 +67,27 @@ public class AbsService {
             TestEntity t=new TestEntity();
             t.setName("hahaha");
             AbsReturn<TestEntity> a=new AbsReturn<TestEntity>();
+            a.setCode(1);
+            a.setMessage("success");
             a.setData(t);
             f.onNext(a);
         });
 
 
+    }
+
+    public static AbsService getInstance() {
+        if (singleton == null) {
+            synchronized (AbsService.class) {
+                if (singleton == null) {
+                    singleton = new AbsService();
+                }
+            }
+        }
+        return singleton;
+    }
+
+    public static AbsApi getService(){
+        return getInstance().mAbsApi;
     }
 }

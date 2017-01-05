@@ -8,6 +8,7 @@ import com.haiyangroup.education.data.AbsReturn;
 
 import java.net.ConnectException;
 
+import retrofit.RetrofitError;
 import rx.Observer;
 
 public abstract class EndObserver<T> implements Observer<T> {
@@ -37,16 +38,16 @@ public abstract class EndObserver<T> implements Observer<T> {
         }
 
         Log.i("exception",e.toString());
-//        if (e instanceof ConnectException){             //HTTP错误
-//            Toast.makeText(mContext,"网络异常！",Toast.LENGTH_SHORT).show();
-//        }
-//        else if (e instanceof RetrofitError){             //HTTP错误
-//            Toast.makeText(mContext,"连接失败！",Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(mContext,"请求失败！",Toast.LENGTH_SHORT).show();
-//        }
-//        onMyError();
+        if (e instanceof ConnectException){             //HTTP错误
+            Toast.makeText(mContext,"网络异常！",Toast.LENGTH_SHORT).show();
+        }
+        else if (e instanceof RetrofitError){             //HTTP错误
+            Toast.makeText(mContext,"连接失败！",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(mContext,"请求失败！",Toast.LENGTH_SHORT).show();
+        }
+        onMyError();
 //
 //        Throwable e1=new Throwable(new ConnectException());
 //        Log.i("error", e1.toString());

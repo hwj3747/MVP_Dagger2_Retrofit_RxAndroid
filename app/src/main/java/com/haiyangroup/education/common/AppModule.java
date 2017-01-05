@@ -35,8 +35,12 @@ public class AppModule {
 
     @Provides
     public AbsService provideApi() {
-        AbsService mService = new AbsService();
-        return mService;
+        return AbsService.getInstance();
+    }
+
+    @Provides
+    public AbsService.AbsApi provideAbsApi() {
+        return AbsService.getService();
     }
 
     @Provides
