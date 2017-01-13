@@ -1,19 +1,32 @@
 package com.haiyangroup.education.data;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.haiyangroup.education.entity.TestEntity;
+import com.haiyangroup.education.entity.jsonOut;
 
-import java.util.ArrayList;
-import java.util.Observer;
+import org.xml.sax.ErrorHandler;
 
-import javax.inject.Inject;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import dagger.Module;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -22,28 +35,72 @@ import rx.Observable;
 
 public class AbsService {
 
-    private static final String FORUM_SERVER_URL = "https://sk.haiyangroup.com:9081/SAAS";
+    private static final String FORUM_SERVER_URL = "http://baike.baidu.com/api/openapi/";
     private AbsApi mAbsApi;
     private volatile static AbsService singleton;
+    final static Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .serializeNulls()
+            .create();
 
     public AbsService() {
+//
+//        RequestInterceptor requestInterceptor = request -> {
+//            request.addHeader("Accept", "text/html");
+//            //request.addHeader("token",ConfigUtil.getToken());
+//            request.addHeader("os","Android");
+//            request.addHeader("ver","1");
+//        };
+//
+//
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(FORUM_SERVER_URL)
+//                .setRequestInterceptor(requestInterceptor)
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                        // .setClient(new OkClient(new OkHttpClient()))
+//                .build();
+//
+//        mAbsApi = restAdapter.create(AbsApi.class);
+        //gson converter
 
-        RequestInterceptor requestInterceptor = request -> {
-            request.addHeader("Accept", "text/html");
-            //request.addHeader("token",ConfigUtil.getToken());
-            request.addHeader("os","Android");
-            request.addHeader("ver","1");
+//公共参数
+        Interceptor addQueryParameterInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request originalRequest = chain.request();
+                Request request;
+                String method = originalRequest.method();
+                Headers headers = originalRequest.headers();
+                HttpUrl modifiedUrl = originalRequest.url().newBuilder()
+                        // Provide your custom parameter here
+                        .addQueryParameter("scope", "103")
+                        .addQueryParameter("format", "json")
+                        .addQueryParameter("appid", "379020")
+                        .addQueryParameter("bk_length", "600")
+                        .build();
+                request = originalRequest.newBuilder().url(modifiedUrl).build();
+                return chain.proceed(request);
+            }
         };
 
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(FORUM_SERVER_URL)
-                .setRequestInterceptor(requestInterceptor)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                        // .setClient(new OkClient(new OkHttpClient()))
+//打印日志
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(addQueryParameterInterceptor)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .build();
 
-        mAbsApi = restAdapter.create(AbsApi.class);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(FORUM_SERVER_URL)
+                .client(client)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        mAbsApi = retrofit.create(AbsApi.class);
     }
     public AbsApi getApi() {
 
@@ -51,15 +108,9 @@ public class AbsService {
     }
 
     public interface AbsApi {
-
-        @GET("/sys/sms")
-        Observable<AbsReturn<TestEntity>>
-        test();//发送验证码
-
-        @GET("/appService/home/homePage")
-        Observable<AbsReturn<DefaultData>>
-        test1();//获取新闻
-
+        @GET("BaikeLemmaCardApi")
+        Observable<jsonOut>
+        getBaidu(@Query("bk_key")String key);//获取新闻
     }
 
     public Observable<AbsReturn<TestEntity>> test(){

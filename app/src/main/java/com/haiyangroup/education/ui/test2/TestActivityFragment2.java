@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haiyangroup.education.R;
 import com.haiyangroup.education.common.App;
@@ -23,6 +24,7 @@ import com.haiyangroup.education.common.AppModule;
 import com.haiyangroup.education.common.ComponentHolder;
 import com.haiyangroup.education.data.AbsReturn;
 import com.haiyangroup.education.entity.TestEntity;
+import com.haiyangroup.education.entity.jsonOut;
 import com.haiyangroup.education.present.TestPresenter;
 import com.haiyangroup.education.present.TestPresenter2;
 import com.haiyangroup.education.view.TestView;
@@ -46,12 +48,14 @@ public class TestActivityFragment2 extends Fragment implements TestView {
     @Inject
     TestPresenter2 presenter2;
 
+    @InjectView(R.id.editText)
+    EditText editText;
 
     @InjectView(R.id.text)
     TextView text;
 
-    @InjectView(R.id.add)
-    TextView add;
+    @InjectView(R.id.search)
+    Button search;
 
     public TestActivityFragment2() {
     }
@@ -67,14 +71,16 @@ public class TestActivityFragment2 extends Fragment implements TestView {
 
         presenter2.bindView(this);
 
-        presenter.test();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-        add.setOnClickListener(v->presenter2.test());
+//        search.setOnClickListener(v->presenter2.test());
+
+
+        search.setOnClickListener(v-> presenter.test(editText.getText().toString()));
     }
 
     @Override
@@ -105,8 +111,16 @@ public class TestActivityFragment2 extends Fragment implements TestView {
     }
 
     @Override
-    public void show(AbsReturn<TestEntity> test) {
-        text.setText(test.getData().getName());
-    };
+    public void show(jsonOut test) {
+        if(test==null||test.getCard()==null)
+            text.setText("暂无百科");
+        else {
+            String text1="";
+            for(jsonOut.TCard tCard:test.getCard()) {
 
+                text1 += tCard.getName() + ":" +tCard.getFormat().toString()+"\n";
+             }
+            text.setText(text1);
+        }
+    };
 }

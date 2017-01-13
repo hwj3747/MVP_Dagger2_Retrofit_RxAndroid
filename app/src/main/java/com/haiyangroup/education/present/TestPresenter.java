@@ -30,8 +30,8 @@ public class TestPresenter extends BasePresenter<TestView> {
 
     private Subscription mTestSubscription= Subscriptions.empty();
 
-    public void test(){
-        mAbsService.test().compose(mSchedulerProvider.applySchedulers()).subscribe(TestObserver);
+    public void test(String key){
+        mAbsService.getApi().getBaidu(key).compose(mSchedulerProvider.applySchedulers()).subscribe(v->{getView().show(v);});
     }
 
     private Observer<AbsReturn<TestEntity>> TestObserver = new EndObserver<AbsReturn<TestEntity>>() {
@@ -42,7 +42,7 @@ public class TestPresenter extends BasePresenter<TestView> {
         @Override
         public void onMyNext(AbsReturn<TestEntity> entity) {
             Log.i("log", entity.getData().getName());
-            getView().show(entity);
+//            getView().show(entity);
         }
 
         @Override

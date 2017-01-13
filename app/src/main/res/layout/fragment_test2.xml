@@ -1,16 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/test"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/editText"
+        android:hint="请输入关键字"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="search"/>
+
     <TextView
         android:id="@+id/text"
+        android:textColor="@color/black"
         android:layout_width="fill_parent"
-        android:layout_height="30dp" />
-
-    <Button
-        android:id="@+id/add"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:text="add"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

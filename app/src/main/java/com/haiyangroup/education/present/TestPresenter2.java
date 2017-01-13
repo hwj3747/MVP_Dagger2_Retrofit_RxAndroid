@@ -38,7 +38,7 @@ public class TestPresenter2 extends BasePresenter<TestView> {
         }
         @Override
         public void onMyNext(AbsReturn<TestEntity> entity) {
-            getView().show(entity);
+//            getView().show(entity);
             Log.i("log2",entity.getData().getName());
         }
         @Override

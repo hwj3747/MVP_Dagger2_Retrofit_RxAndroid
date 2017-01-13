@@ -107,7 +107,11 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'//rxandroid 配置，实现异步操作
 
-    compile 'com.squareup.retrofit:retrofit:1.9.0'//retrofit配置，链接网络的库
+   // compile 'com.squareup.retrofit:retrofit:1.9.0'//retrofit配置，链接网络的库
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
     compile 'frankiesardo:icepick:3.1.0'
     apt 'frankiesardo:icepick-processor:3.1.0'//icepick配置，用来保存和恢复状态
