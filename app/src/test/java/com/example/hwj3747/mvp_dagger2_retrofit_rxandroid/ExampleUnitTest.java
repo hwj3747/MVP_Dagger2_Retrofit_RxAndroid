@@ -1,4 +1,4 @@
-package com.haiyangroup.education.mvp_dagger2_retrofit_rxandroid;
+package com.hwj3747.test.mvp_dagger2_retrofit_rxandroid;
 
 import org.junit.Test;
 
