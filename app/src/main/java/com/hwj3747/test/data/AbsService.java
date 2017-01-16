@@ -29,7 +29,7 @@ import rx.Observable;
 
 public class AbsService {
 
-    private static final String FORUM_SERVER_URL = "http://baike.baidu.com/api/openapi/";
+    private static final String FORUM_SERVER_URL = "http://baike.baidu.com/api/openapi/";//基础URL
     private AbsApi mAbsApi;
     private volatile static AbsService singleton;
     final static Gson gson = new GsonBuilder()
@@ -38,25 +38,6 @@ public class AbsService {
             .create();
 
     public AbsService() {
-//
-//        RequestInterceptor requestInterceptor = request -> {
-//            request.addHeader("Accept", "text/html");
-//            //request.addHeader("token",ConfigUtil.getToken());
-//            request.addHeader("os","Android");
-//            request.addHeader("ver","1");
-//        };
-//
-//
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(FORUM_SERVER_URL)
-//                .setRequestInterceptor(requestInterceptor)
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                        // .setClient(new OkClient(new OkHttpClient()))
-//                .build();
-//
-//        mAbsApi = restAdapter.create(AbsApi.class);
-        //gson converter
-
 //公共参数
         Interceptor addQueryParameterInterceptor = new Interceptor() {
             @Override
@@ -110,7 +91,7 @@ public class AbsService {
     public Observable<AbsReturn<TestEntity>> test(){
         return Observable.create(f->{
             TestEntity t=new TestEntity();
-            t.setName("hahaha");
+            t.setName("test");
             AbsReturn<TestEntity> a=new AbsReturn<TestEntity>();
             a.setCode(1);
             a.setMessage("success");

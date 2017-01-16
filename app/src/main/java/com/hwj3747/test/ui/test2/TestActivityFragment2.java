@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.hwj3747.test.R;
 import com.hwj3747.test.common.ComponentHolder;
+import com.hwj3747.test.data.AbsReturn;
+import com.hwj3747.test.entity.TestEntity;
 import com.hwj3747.test.entity.jsonOut;
 import com.hwj3747.test.present.TestPresenter;
 import com.hwj3747.test.present.TestPresenter2;
 import com.hwj3747.test.view.TestView;
+import com.hwj3747.test.view.TestView2;
 
 import javax.inject.Inject;
 
@@ -26,7 +29,7 @@ import butterknife.InjectView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TestActivityFragment2 extends Fragment implements TestView {
+public class TestActivityFragment2 extends Fragment implements TestView,TestView2 {
 
     @Inject
     TestPresenter presenter;
@@ -42,6 +45,9 @@ public class TestActivityFragment2 extends Fragment implements TestView {
 
     @InjectView(R.id.search)
     Button search;
+
+    @InjectView(R.id.testButton)
+    Button test;
 
     public TestActivityFragment2() {
     }
@@ -67,6 +73,7 @@ public class TestActivityFragment2 extends Fragment implements TestView {
 
 
         search.setOnClickListener(v-> presenter.test(editText.getText().toString()));
+        test.setOnClickListener(v-> presenter2.test());
     }
 
     @Override
@@ -109,4 +116,9 @@ public class TestActivityFragment2 extends Fragment implements TestView {
             text.setText(text1);
         }
     };
+
+    @Override
+    public void show(AbsReturn<TestEntity> test) {
+        text.setText(test.getData().getName());
+    }
 }

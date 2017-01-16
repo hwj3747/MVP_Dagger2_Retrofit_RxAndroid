@@ -17,6 +17,13 @@
         android:layout_height="wrap_content"
         android:text="search"/>
 
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="test"/>
+
     <TextView
         android:id="@+id/text"
         android:textColor="@color/black"
