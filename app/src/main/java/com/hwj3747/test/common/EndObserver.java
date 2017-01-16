@@ -67,5 +67,6 @@ public abstract class EndObserver<T> implements Observer<T> {
             }
             else onMyNext(entity);
         }
+        else onMyNext(entity);
     }
 }

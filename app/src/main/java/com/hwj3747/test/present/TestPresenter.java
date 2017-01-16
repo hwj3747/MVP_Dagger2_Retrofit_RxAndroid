@@ -33,24 +33,7 @@ public class TestPresenter extends BasePresenter<TestView> {
     private Subscription mTestSubscription= Subscriptions.empty();
 
     public void test(String key){
-//        mAbsService.getApi().getBaidu(key).compose(mSchedulerProvider.applySchedulers()).subscribe(TestObserver);
-        mAbsService.getApi().getBaidu(key).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<jsonOut>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(jsonOut jsonOut) {
-                getView().show(jsonOut);
-            }
-        });
+          mAbsService.getApi().getBaidu(key).compose(mSchedulerProvider.applySchedulers()).subscribe(TestObserver);
     }
 
     private Observer<jsonOut> TestObserver = new EndObserver<jsonOut>() {
